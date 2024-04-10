@@ -1,7 +1,7 @@
-from django.urls import path, include
-from .views import Portfolio
+# from django.urls import path, include
+# from .views import Portfolio
 
-urlpatterns = [
-    path('', Portfolio.as_view()),
+# urlpatterns = [
+#     path('', Portfolio.as_view()),
 
-]
+# ]

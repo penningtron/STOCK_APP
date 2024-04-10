@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'user_app',
     'watchlist_app',
     'stock_app_proj',
+    'stock_positions_app',
 ]
 
 MIDDLEWARE = [

@@ -7,4 +7,5 @@ from user_app.models import App_user
 
 # Create your models here.
 class Portfolio(models.Model):
-    user = models.ForeignKey(App_user, on_delete=models.CASCADE, related_name='portfolio')
+    user = models.OneToOneField(App_user, on_delete=models.CASCADE, related_name='portfolio')
+
