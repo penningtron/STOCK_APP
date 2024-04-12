@@ -1,58 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Stock Portfolio Chart</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-    <canvas id="portfolioChart" width="800" height="400"></canvas>
-    <script>
-        // Function to fetch stock data from Alpaca API
-        async function fetchStockData(symbol) {
-            const apiKey = 'PKWK7LZ3BLON0M6TGHQY';
-            const response = await fetch(`https://data.alpaca.markets/v2/bars/day?symbols=${symbol}&limit=30`, {
-                headers: {
-                    'APCA-API-KEY-ID': apiKey,
-                    'APCA-API-SECRET-KEY': 'BQg1kG6Pxy2GuOJO3efLy8VPUEkPiAVtwZKzy3Al'
-                }
-            });
-            const data = await response.json();
-            return data[symbol];
-        }
-
-        // Function to render chart
-        async function renderChart() {
-            const symbols = ['AAPL', 'GOOGL', 'MSFT']; // Example list of stock symbols
-            const datasets = [];
-            for (const symbol of symbols) {
-                const stockData = await fetchStockData(symbol);
-                const prices = stockData.map(bar => bar.c);
-                datasets.push({
-                    label: symbol,
-                    data: prices
-                });
-            }
-
-            const ctx = document.getElementById('portfolioChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    datasets: datasets
-                },
-                options: {
-                    scales: {
-                        x: {
-                            type: 'time',
-                            time: {
-                                unit: 'day'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        renderChart();
-    </script>
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

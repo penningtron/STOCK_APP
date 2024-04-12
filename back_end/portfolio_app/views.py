@@ -14,3 +14,6 @@ from rest_framework.status import (
 
 
 # Create your views here.
+class Portfolio(TokenReq):
+    pass
+

@@ -14,6 +14,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from .models import App_user
 from utils import telesign_API
+from stock_positions_app.models import StockPositions
+from portfolio_app.models import Portfolio
 
 
 # Create your views here.
@@ -33,9 +35,20 @@ class Sign_up(APIView):
             new_user.save()
             new_user.set_password(data.get("password"))
             new_user.save()
+            portfolio = Portfolio.objects.create(user=new_user)
+
+
+            initial_stock_positions = [
+                {'symbol': 'AAPL', 'quantity': 10},
+                {'symbol': 'GOOGL', 'quantity': 32},
+                # Add more initial stock positions as needed
+            ]
+            
+            for position_data in initial_stock_positions:
+                StockPositions.objects.create(portfolio=portfolio, **position_data)
             
             login(request, new_user)
-            token = Token.objects.create(user = new_user)
+            token = Token.objects.create(user=new_user)
             return Response({"user":new_user.display_name, "token":token.key}, status=HTTP_201_CREATED)
         except ValidationError as e:
             print(e)
