@@ -4,8 +4,6 @@ from telesignenterprise.verify import VerifyClient
 from telesign.util import random_with_n_digits
 
 import os
-# customer_id = os.getenv('CUSTOMER_ID', '679BB0A3-2F00-4ACE-88AC-9BBFF4E6B738')
-# api_key = os.getenv('API_KEY', 'y7yDlzXlflXCjkJay0IS/cVQmSWZRbhCVsRrGux+z0kraLGGLmPqHPuz8zFzeGJ0d5aiDRF0hUxz0ZJfgwzLEA==')
 
 customer_id = os.environ.get('CUSTOMER_ID')
 api_key = os.environ.get('API_KEY')

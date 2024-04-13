@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'stock_app_proj',
     'stock_positions_app',
     'channels',
+    'corsheaders',
 ]
 
 CHANNEL_LAYERS = {
@@ -68,6 +69,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+CORS_ALLOWED_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
 ]
 
 ROOT_URLCONF = 'stock_app_proj.urls'
