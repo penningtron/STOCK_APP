@@ -28,17 +28,17 @@ class All_positions(TokenReq):
             all_positions = StockPositions.objects.filter(portfolio=user_portfolio)
 
             # Fetch current prices for all stock symbols
-            for position in all_positions:
-                symbol = position.symbol
-                # Make API call to Alpaca Markets to get current price
-                response = requests.get(f'https://data.alpaca.markets/v2/stocks/{symbol}/quotes/latest',
-                                    headers={'APCA-API-KEY-ID': alpaca_api_key, 'APCA-API-SECRET-KEY': alpaca_secret_key})
-                if response.status_code == 200:
-                    current_price = response.json()['quote']['ap']
-                    position.current_price = current_price
-                    position.save()
-                else:
-                    return Response(f"Failed to fetch current price for symbol {symbol}", status=HTTP_400_BAD_REQUEST)
+            # for position in all_positions:
+            #     symbol = position.symbol
+            #     # Make API call to Alpaca Markets to get current price
+            #     response = requests.get(f'https://data.alpaca.markets/v2/stocks/{symbol}/quotes/latest',
+            #                         headers={'APCA-API-KEY-ID': alpaca_api_key, 'APCA-API-SECRET-KEY': alpaca_secret_key})
+            #     if response.status_code == 200:
+            #         current_price = response.json()['quote']['ap']
+            #         position.current_price = current_price
+            #         position.save()
+            #     else:
+            #         return Response(f"Failed to fetch current price for symbol {symbol}", status=HTTP_400_BAD_REQUEST)
             
             
             # Serialize the filtered queryset

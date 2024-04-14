@@ -62,7 +62,7 @@ class Log_in(APIView):
         if user:
             login(request, user)
             token, created = Token.objects.get_or_create(user = user)
-            return Response({"user": user.display_name, "token":token.key}, status=HTTP_200_OK)
+            return Response({"user": user.email, "token":token.key}, status=HTTP_200_OK)
         return Response("No user matching credentials", status=HTTP_400_BAD_REQUEST)
 
 class TokenReq(APIView):
