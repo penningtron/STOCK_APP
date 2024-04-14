@@ -5,18 +5,22 @@ import dotenv from 'dotenv';
 // dotenv.config();
 // import process from 'process';
 
+import { useOutletContext } from 'react-router-dom';
+import { userLogin } from '../utilities';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const apiKey = import.meta.env.VITE_ALPACA_API_KEY;
 const secretKey = import.meta.env.VITE_ALPACA_SECRET_KEY;
 
-const StockChart = () => {
+const StockChart = ({ user }) => {
   const [data, setData] = useState(null);
   const chartRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
+        console.log(user)
       try {
         const response = await axios.get('https://data.alpaca.markets/v2/stocks/AMZN/bars', {
           params: {
