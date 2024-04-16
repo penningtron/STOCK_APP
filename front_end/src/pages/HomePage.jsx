@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'; // Add these imports
 import PortfolioList from "../components/PortfolioList";
 import AddStock from "../components/AddStock";
 import RemoveStock from "../components/RemoveStock";
+import ChangeStockQuantity from "../components/ChangeQuantity";
 
 
 
@@ -45,6 +46,7 @@ const HomePage = () => {
             <AddStock />
         
             <PortfolioList data={user} />
+            <ChangeStockQuantity />
           
           <RemoveStock />
           

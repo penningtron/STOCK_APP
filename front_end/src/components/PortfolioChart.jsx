@@ -104,7 +104,7 @@ const StockChart = () => {
             const year = date.getFullYear();
           
             return `${month}/${day}/${year}`;
-          }), // replace with your data's timestamp
+          }), 
           datasets: [{
             label: `${symbol} : ${companyName} : Exchange - ${exchange}`,
             data: data.map(item => item.c), // replace with your data's closing price

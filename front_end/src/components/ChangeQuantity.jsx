@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 
-function RemoveStock() {
+function ChangeStockQuantity() {
   const [symbol, setSymbol] = useState('');
   const [quantity, setQuantity] = useState('');
 
@@ -11,8 +11,10 @@ function RemoveStock() {
     event.preventDefault();
 
     try {
-        await axios.delete(`http://127.0.0.1:8000/api/v1/stock_positions/${symbol}/`, {
-        
+        await axios.put(`http://127.0.0.1:8000/api/v1/stock_positions/${symbol}`, {
+          
+          quantity: quantity
+        }, {
           headers: {
             'Authorization': `Token ${localStorage.getItem('token')}`
           }
@@ -25,17 +27,20 @@ function RemoveStock() {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Stock to remove</Form.Label>
+        <Form.Label>Change Quantity</Form.Label>
         <Form.Control type="text" placeholder="Enter symbol" value={symbol} onChange={e => setSymbol(e.target.value)} />
       </Form.Group>
 
-      
+      <Form.Group className="mb-3" controlId="formBasicQuantity">
+        <Form.Label>Quantity</Form.Label>
+        <Form.Control type="number" placeholder="Enter quantity" value={quantity} onChange={e => setQuantity(e.target.value)} />
+      </Form.Group>
 
       <Button variant="primary" type="submit">
-        Remove
+        Submit
       </Button>
     </Form>
   );
 }
 
-export default RemoveStock;
+export default ChangeStockQuantity;

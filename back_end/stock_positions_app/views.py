@@ -66,12 +66,30 @@ class All_positions(TokenReq):
             return Response(ser_positions.errors,status=HTTP_400_BAD_REQUEST)
         
 
-    def delete(self, request):
-        symbol = request.data.get('symbol')
-        try:
-            position = StockPositions.objects.get(symbol=symbol)
-        except StockPositions.DoesNotExist:
-            return Response(status= HTTP_404_NOT_FOUND)
-
+    def delete(self, request, symbol):
+        data = request.data
+        user = request.user
+        portfolio = request.user.portfolio
+        data['portfolio'] = portfolio.id
+        position = get_object_or_404(StockPositions, symbol=symbol, portfolio=portfolio.id)
         position.delete()
+
+        
         return Response(status= HTTP_204_NO_CONTENT)
+    
+    def put(self, request, symbol):
+        data = request.data
+        new_quantity = request.data.get('quantity')
+        user = request.user
+        portfolio = user.portfolio
+        # data['portfolio'] = portfolio.id
+
+        try:
+            position = StockPositions.objects.get(symbol=symbol, portfolio=portfolio.id)
+        except StockPositions.DoesNotExist:
+            return Response({'error': 'Stock not found in your portfolio'}, status=HTTP_404_NOT_FOUND)
+
+        position.quantity = new_quantity
+        position.save()
+
+        return Response(StockPositionSerializer(position).data, status=HTTP_200_OK)

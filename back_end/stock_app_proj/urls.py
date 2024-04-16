@@ -16,11 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from stock_positions_app.views import All_positions
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/users/', include("user_app.urls")),
+    path('api/v1/stock_positions/<str:symbol>/', All_positions.as_view(), name='stock_positions'),
     path('api/v1/stock_positions/', include("stock_positions_app.urls")),
     path('api/v1/portfolio/', include("portfolio_app.urls")),
+    path('api/v1/watchlist/', include("watchlist_app.urls")),
+    
     
 ]

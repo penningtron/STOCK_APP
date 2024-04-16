@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'watchlist_app',
     'stock_app_proj',
     'stock_positions_app',
+    'watch_stock_app',
     'channels',
     'corsheaders',
 ]
@@ -72,11 +73,12 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = True
-
+CORS_ALLOWED_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
 ]
+
+
 
 ROOT_URLCONF = 'stock_app_proj.urls'
 

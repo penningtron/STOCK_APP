@@ -3,5 +3,6 @@ from .views import All_positions
 
 urlpatterns = [
     path('', All_positions.as_view()),
+    
 
 ]
