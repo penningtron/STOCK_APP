@@ -5,8 +5,9 @@ import SignInPage from "./pages/SignInPage";
 import ErrorPage from "./pages/ErrorPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import SignUpPage from "./pages/SignUpPage";
-import StockChart from "./pages/ChartPage";
+import ResearchPage from "./pages/ResearchPage";
 import { children } from "react";
+import LandingPage from "./pages/LandingPage";
 
 
 const router = createBrowserRouter([
@@ -16,6 +17,11 @@ const router = createBrowserRouter([
         children:[
             {
                 index:true,
+                element:<LandingPage/>
+
+            },
+            {
+                path:"/homepage/",
                 element:<HomePage/>
 
             },
@@ -29,8 +35,8 @@ const router = createBrowserRouter([
                 element:<SignUpPage/>
             },
             {
-                path:"/chartpage/",
-                element:<StockChart />
+                path:"/research/",
+                element:<ResearchPage />
             },
             {
                 path:"*",

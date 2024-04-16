@@ -5,6 +5,8 @@ import PortfolioChart from "../components/PortfolioChart";
 import PortTable from "../components/PortfolioList";
 import { useState, useEffect } from 'react'; // Add these imports
 import PortfolioList from "../components/PortfolioList";
+import AddStock from "../components/AddStock";
+import RemoveStock from "../components/RemoveStock";
 
 
 
@@ -13,25 +15,39 @@ const HomePage = () => {
     console.log(user)
     useEffect(() => {
         const fetchUser = async () => {
-          try {
-            const response = await fetch('/stock_positions'); // Replace with your API endpoint
-            const userData = await response.json();
-            
-            setUser(userData);
-            console.log(userData);
-          } catch (error) {
-            console.error('Error fetching user:', error);
-          }
-        };
+            try {
+              const response = await fetch('http://127.0.0.1:8000/api/v1/stock_positions/', {
+                headers: {
+                  'Authorization': `Token ${localStorage.getItem('token')}` // Replace with the way you store your token
+                }
+              });
+              const userData = await response.json();
+              
+              setUser(userData);
+              console.log(userData);
+            } catch (error) {
+              console.error('Error fetching user:', error);
+            }
+          };
     
         fetchUser();
+      }, []);
+
+      useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        }
       }, []);
     
       return (
         <>
-            <PortfolioList />
-          <PortfolioChart />
-          {user && <PortfolioChart stock_positions={user.stock_positions} />} {/* Pass stock_positions to PortfolioChart */}
+            <AddStock />
+        
+            <PortfolioList data={user} />
+          
+          <RemoveStock />
+          
         </>
       )
     }

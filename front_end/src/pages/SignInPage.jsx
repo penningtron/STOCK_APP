@@ -19,7 +19,7 @@ const LogIn = () => {
         console.log(user);
         if (user) {
             alert("Login successful");
-            navigate('/');
+            navigate('/homepage');
         }
     
     }

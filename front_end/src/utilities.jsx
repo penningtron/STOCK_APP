@@ -20,3 +20,23 @@ export const userLogin = async (email, password) => {
 
 
 }
+
+export const userLogout = async () => {
+
+    const response = await api.post("users/logout/");
+    if (response.status === 204) {
+        localStorage.removeItem("token");
+        delete api.defaults.headers.common['Authorization'];
+        return null;
+    } else {
+        console.log("Logout failed", response);
+    }
+}
+
+export const userConfirmation = async () => {
+    const token = localStorage.getItem("token");
+    if(token) {
+        api.defaults.headers.common['Authorization'] = `Token ${token}`;
+        const response = await api.get("users/");
+    }
+}

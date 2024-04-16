@@ -4,69 +4,148 @@ import Chart from 'chart.js/auto';
 import dotenv from 'dotenv';
 // dotenv.config();
 // import process from 'process';
+import PortfolioChart from '../components/PortfolioChart';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { useOutletContext } from 'react-router-dom';
-import { userLogin } from '../utilities';
-import { useNavigate } from 'react-router-dom';
+
 
 
 
 const apiKey = import.meta.env.VITE_ALPACA_API_KEY;
 const secretKey = import.meta.env.VITE_ALPACA_SECRET_KEY;
 
-const StockChart = ({ user }) => {
+const StockChart = () => {
   const [data, setData] = useState(null);
   const chartRef = useRef(null);
+  const [symbol, setSymbol] = useState('AAPL');
+  const [loading, setLoading] = useState(true);
+  const [chartInstance, setChartInstance] = useState(null);
+  const [inputValue, setInputValue] = useState(symbol);
+  const [companyName, setCompanyName] = useState(null);
+  const [exchange, setExchange] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-        console.log(user)
-      try {
-        const response = await axios.get('https://data.alpaca.markets/v2/stocks/AMZN/bars', {
-          params: {
-            timeframe: '1D',
-            start: '2023-01-01T00:00:00Z',
-            end: '2023-03-17T00:00:00Z'
-          },
-          headers: {
-            'APCA-API-KEY-ID': apiKey,
-            'APCA-API-SECRET-KEY': secretKey
-          }
-        });
-        setData(response.data.bars);
-        console.log(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
+  const handleChange = (e) => {
+    setInputValue(e.target.value); // update inputValue when the input changes
+  };
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSymbol(inputValue); // update symbol when the form is submitted
     fetchData();
-  }, []);
+  };
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      // const currentDate = new Date().toISOString();
+      
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
+      const day = String(date.getDate()).padStart(2, '0');
+      const currentDate = `${year}-${month}-${day}T00:00:00Z`;
+      const response = await axios.get(`https://data.alpaca.markets/v2/stocks/${symbol}/bars`, {
+        params: {
+          timeframe: '1D',
+          start: '2024-01-01T00:00:00Z',
+          end: currentDate
+        },
+        headers: {
+          'APCA-API-KEY-ID': apiKey,
+          'APCA-API-SECRET-KEY': secretKey
+        }
+      });
+      
+      setData(response.data.bars);
+      console.log(response.data);
+
+      // get the compnay name
+      const companyNameResponse = await axios.get(`https://paper-api.alpaca.markets/v2/assets/${symbol}`, {
+        headers: {
+          'APCA-API-KEY-ID': apiKey,
+          'APCA-API-SECRET-KEY': secretKey
+        }
+      });
+      setCompanyName(companyNameResponse.data.name);
+      setExchange(companyNameResponse.data.exchange);
+      
+      
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+    setLoading(false);
+  };
+  const getRandomColor = () => {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return `rgb(${r}, ${g}, ${b})`;
+  };
+  
+
+ 
+
+
 
   useEffect(() => {
-    if (data && chartRef.current) {
+    if (!loading && data && chartRef.current) {
+      if (chartInstance) {
+        chartInstance.destroy();
+      }
       const ctx = chartRef.current.getContext('2d');
-      new Chart(ctx, {
+      // create a new chart instence
+      const newChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: data.map(item => item.t), // replace with your data's timestamp
+          labels: data.map(item => {
+            const date = new Date(item.t);
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
+            const year = date.getFullYear();
+          
+            return `${month}/${day}/${year}`;
+          }), // replace with your data's timestamp
           datasets: [{
-            label: 'AAPL',
+            label: `${symbol} : ${companyName} : Exchange - ${exchange}`,
             data: data.map(item => item.c), // replace with your data's closing price
             fill: false,
-            borderColor: 'rgb(75, 192, 192)',
+            borderColor: getRandomColor(),
             tension: 0.1
           }]
         }
       });
+      //call the new chart instance
+      setChartInstance(newChartInstance);
     }
-  }, [data]);
+  }, [loading, data, symbol, companyName]);
 
   return (
-    <div>
+          <div>
+            <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="exampleInputEmail1">Search for a symbol:</label>
+          <input type="text" className="form-control" value={inputValue} onChange={handleChange} id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="SYMBOL"/>
+          <small id="emailHelp" className="form-text text-muted">Ensure symbol is in all caps</small>
+        </div>
+        <br></br>
+       
+      
+        <button type="submit" className="btn btn-primary">Submit</button>
+      </form>
+      
+      
+      {/* <form onSubmit={handleSubmit}>
+        <input type = "text" value={inputValue} onChange={handleChange} />
+        <button type="submit">Submit</button>
+
+      </form> */}
+      <br></br>
       <canvas ref={chartRef} />
+      {/* <PortfolioChart /> */}
     </div>
   );
 };
 
 export default StockChart;
+
+

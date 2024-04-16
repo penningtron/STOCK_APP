@@ -9,7 +9,8 @@ from rest_framework.status import (
     HTTP_200_OK,
     HTTP_204_NO_CONTENT,
     HTTP_201_CREATED,
-    HTTP_400_BAD_REQUEST
+    HTTP_400_BAD_REQUEST,
+    HTTP_404_NOT_FOUND,
 )
 from .serializers import StockPositionSerializer, StockPositions
 import requests
@@ -63,3 +64,14 @@ class All_positions(TokenReq):
         else:
             print(ser_positions.errors)
             return Response(ser_positions.errors,status=HTTP_400_BAD_REQUEST)
+        
+
+    def delete(self, request):
+        symbol = request.data.get('symbol')
+        try:
+            position = StockPositions.objects.get(symbol=symbol)
+        except StockPositions.DoesNotExist:
+            return Response(status= HTTP_404_NOT_FOUND)
+
+        position.delete()
+        return Response(status= HTTP_204_NO_CONTENT)

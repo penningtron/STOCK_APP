@@ -29,8 +29,9 @@ function App() {
 
   return (
     <>
+    <Sidebar user={user} setUser={setUser} />
     
-      <Sidebar user={user} />
+      
       
       <Outlet context={{user, setUser}} />
     </>
