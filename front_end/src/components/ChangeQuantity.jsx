@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import { api } from '../utilities';
 
 function ChangeStockQuantity() {
   const [symbol, setSymbol] = useState('');
@@ -11,9 +12,9 @@ function ChangeStockQuantity() {
     event.preventDefault();
 
     try {
-        await axios.put(`http://127.0.0.1:8000/api/v1/stock_positions/${symbol}`, {
+        await api.put(`stock_positions/${symbol}/`, {
           
-          quantity: quantity
+          quantity: String(quantity)
         }, {
           headers: {
             'Authorization': `Token ${localStorage.getItem('token')}`

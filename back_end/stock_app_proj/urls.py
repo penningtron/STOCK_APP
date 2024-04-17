@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from stock_positions_app.views import All_positions
+from watch_stock_app.views import All_watched_stocks
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,7 +26,7 @@ urlpatterns = [
     path('api/v1/stock_positions/<str:symbol>/', All_positions.as_view(), name='stock_positions'),
     path('api/v1/stock_positions/', include("stock_positions_app.urls")),
     path('api/v1/portfolio/', include("portfolio_app.urls")),
-    path('api/v1/watchlist/', include("watchlist_app.urls")),
+    path('api/v1/watched_stocks/', All_watched_stocks.as_view(), name='watched_stocks'),
     
     
 ]

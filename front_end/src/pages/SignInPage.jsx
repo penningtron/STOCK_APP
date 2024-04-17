@@ -15,14 +15,25 @@ const LogIn = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         const { user } = await userLogin(email, password);
-        setUser(user);
-        console.log(user);
+        
+        
         if (user) {
+          console.log(user);
+          setUser(user);
+          localStorage.setItem("user", user);
+          //comment the line below to get it kind of working
+            // localStorage.setItem("user", JSON.stringify(user));
             alert("Login successful");
             navigate('/homepage');
         }
     
     }
+
+
+
+
+
+
 return (
     <Form onSubmit={handleLogin}>
       <Form.Group className="mb-3" controlId="formBasicEmail">

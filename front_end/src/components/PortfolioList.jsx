@@ -1,4 +1,6 @@
 import ListGroup from 'react-bootstrap/ListGroup';
+import React, { useState, useEffect } from 'react';
+import { api } from '../utilities/'
 
 // function PortfolioList() {
 //   return (
@@ -13,14 +15,34 @@ import ListGroup from 'react-bootstrap/ListGroup';
 // export default PortfolioList;
 
 
+function PortfolioList() {
+  const [stockPositions, setStockPositions] = useState([]);
 
+  useEffect(() => {
+    
 
-function PortfolioList({ data }) {
+    const fetchStockPositions = async () => {
+      try {
+        const response = await api.get('stock_positions/', {
+          headers: {
+            'Authorization': `Token ${localStorage.getItem('token')}` // Replace with the way you store your token
+          }
+        });
+        const data = await response.data;
+        setStockPositions(data);
+      } catch (error) {
+        console.error('Error fetching stock positions:', error);
+      }
+    };
+
+    fetchStockPositions();
+  }, []);
+
   return (
     <>
-      {data && (
+      {stockPositions && (
         <ListGroup as="ol" numbered>
-          {data.map((item, index) => (
+          {stockPositions.map((item, index) => (
             <ListGroup.Item as="li" key={index}>
               {item.symbol} - Quantity: {item.quantity}
             </ListGroup.Item>
@@ -32,3 +54,27 @@ function PortfolioList({ data }) {
 }
 
 export default PortfolioList;
+
+
+
+
+
+
+// function PortfolioList({ userData }) {
+//   console.log(userData)
+//   return (
+//     <>
+//       {userData && (
+//         <ListGroup as="ol" numbered>
+//           {userData.map((item, index) => (
+//             <ListGroup.Item as="li" key={index}>
+//               {item.symbol} - Quantity: {item.quantity}
+//             </ListGroup.Item>
+//           ))}
+//         </ListGroup>
+//       )}
+//     </>
+//   );
+// }
+
+// export default PortfolioList;

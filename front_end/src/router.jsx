@@ -8,6 +8,7 @@ import SignUpPage from "./pages/SignUpPage";
 import ResearchPage from "./pages/ResearchPage";
 import { children } from "react";
 import LandingPage from "./pages/LandingPage";
+import WatchList from "./pages/WatchListPage";
 
 
 const router = createBrowserRouter([
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
             {
                 path:"/research/",
                 element:<ResearchPage />
+            },
+            {
+                path:"/watch_list/",
+                element:<WatchList />
             },
             {
                 path:"*",

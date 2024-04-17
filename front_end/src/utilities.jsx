@@ -9,7 +9,10 @@ export const api = axios.create({
 export const userLogin = async (email, password) => {
     const response = await api.post("users/login/", { email, password });
     if (response.status === 200) {
-        const { token, user } = response.data;
+        console.log(response.data)
+        const { user, token } = response.data;
+        // console.log(user)
+        // console.log(token)
         localStorage.setItem("token", token);
         api.defaults.headers.common['Authorization'] = `Token ${token}`;
         return { user, email };

@@ -4,10 +4,22 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import { userLogout } from '../utilities';
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+
+
 
 
 function NavBar({ user, setUser }) {
+  
+    useEffect(() => {
+    const storedUser = localStorage.getItem(user);
+    if (storedUser) {
+      console.log(storedUser);
+      setUser(storedUser);
+
+    }
+  }, []);
+  // const { setUser } = useOutletContext();
   const handleLogout = () => {
     // Clear the user's session or token here
     setUser(null); // If you're storing the user in state
@@ -17,12 +29,9 @@ function NavBar({ user, setUser }) {
   };
 
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+
+
+  console.log(localStorage.getItem('user'))
 
 
   // console.log(user.email);
@@ -31,9 +40,9 @@ function NavBar({ user, setUser }) {
       
       <Navbar bg="primary" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand href="/homepage">SuperStockSaver</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/homepage">SuperStockSaver</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#">Watch List</Nav.Link>
+          <Link to="/watch_list" className="nav-link">Watch List</Link>
             <Link to="/research" className="nav-link">Research</Link>
            
           </Nav>

@@ -16,6 +16,8 @@ from .models import App_user
 from utils import telesign_API
 from stock_positions_app.models import StockPositions
 from portfolio_app.models import Portfolio
+from watchlist_app.models import Watchlist
+from watch_stock_app.models import WatchStock
 
 
 # Create your views here.
@@ -36,6 +38,13 @@ class Sign_up(APIView):
             new_user.set_password(data.get("password"))
             new_user.save()
             portfolio = Portfolio.objects.create(user=new_user)
+            watchlist = Watchlist.objects.create(user=new_user)
+
+            initial_watch_list = [
+                {'symbol': "SPY"},
+                {'symbol': "GE"},
+            ]
+            
 
 
             initial_stock_positions = [
@@ -46,6 +55,10 @@ class Sign_up(APIView):
             
             for position_data in initial_stock_positions:
                 StockPositions.objects.create(portfolio=portfolio, **position_data)
+
+            for watch_list_data in initial_watch_list:
+                WatchStock.objects.create(watchlist=watchlist, **watch_list_data)
+
             
             login(request, new_user)
             token = Token.objects.create(user=new_user)

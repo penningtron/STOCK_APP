@@ -9,25 +9,26 @@ import AddStock from "../components/AddStock";
 import RemoveStock from "../components/RemoveStock";
 import ChangeStockQuantity from "../components/ChangeQuantity";
 import { useOutletContext } from "react-router-dom";
+import WatchList from "../components/WatchList";
 
 
 
-const HomePage = () => {
+const WatchListPage = () => {
     // const [user, setUser] = useState(null);
     const {user} = useOutletContext();
  
     
       return (
         <>
-            <AddStock />
+            
         
-            <PortfolioList data={user} />
-            <ChangeStockQuantity />
+            <WatchList data={user} />
+            
           
-          <RemoveStock />
+          
           
         </>
       )
     }
     
-    export default HomePage;
+    export default WatchListPage;

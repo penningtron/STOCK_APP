@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import { api } from '../utilities';
 
 function AddStock() {
   const [symbol, setSymbol] = useState('');
@@ -11,14 +12,12 @@ function AddStock() {
     event.preventDefault();
 
     try {
-        await axios.post('http://127.0.0.1:8000/api/v1/stock_positions/', {
+        await api.post('stock_positions/', {
           symbol,
           quantity
-        }, {
-          headers: {
-            'Authorization': `Token ${localStorage.getItem('token')}`
-          }
-        });
+        }, 
+         
+        );
     } catch (error) {
       console.error('Error adding stock:', error);
     }

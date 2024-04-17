@@ -16,14 +16,24 @@ from rest_framework.status import (
 from .serializers import WatchedStockSerializer, WatchStock
 import requests
 import os
+from django.http import JsonResponse
 
 # Create your views here.
 
 class All_watched_stocks(TokenReq):
     def get(self, request):
         try:
-            all_watched_stocks = WatchedStockSerializer(WatchStock.objects.order_by("id"), many=True)
-            return Response(all_watched_stocks.data)
+            print("debuging")
+            print(request.user.watchlist,"debugging ")
+            
+            user_watchlist = request.user.watchlist
+            print("testing user_watchlist")
+            # print(user_watchlist.data,"testing user_watchlist.data")
+            all_watched_stocks = WatchStock.objects.filter(watchlist=user_watchlist)
+            print(all_watched_stocks,"all watched stocks")
+            ser_watch_list = WatchedStockSerializer(all_watched_stocks, many=True)
+            print(ser_watch_list, "ser_watch_list")
+            return Response(ser_watch_list.data)
         except Exception as e:
             return Response(e, status=HTTP_400_BAD_REQUEST)
 
