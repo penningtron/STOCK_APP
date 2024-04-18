@@ -38,8 +38,8 @@ function NavBar({ user, setUser }) {
   return (
     <>
       
-      <Navbar bg="primary" data-bs-theme="dark">
-        <Container>
+      <Navbar bg="primary" data-bs-theme="dark" className='bg-dark' >
+        <Container >
           <Navbar.Brand as={Link} to="/homepage">SuperStockSaver</Navbar.Brand>
           <Nav className="me-auto">
           <Link to="/watch_list" className="nav-link">Watch List</Link>
@@ -48,7 +48,7 @@ function NavBar({ user, setUser }) {
           </Nav>
           <Navbar.Brand href="#user">Welcome: { user ? user : ""}</Navbar.Brand>
           {user && (
-            <Link to="/">
+            <Link to="/homepage">
               <Button variant="outline-light" onClick={() => handleLogout()}>Log Out</Button>
             </Link>
           )}

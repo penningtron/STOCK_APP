@@ -19,9 +19,10 @@ const HomePage = () => {
     
       return (
         <>
-            <AddStock />
+            
         
             <PortfolioList data={user} />
+            <AddStock />
             <ChangeStockQuantity />
           
           <RemoveStock />

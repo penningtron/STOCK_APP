@@ -2,3 +2,20 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+.form {
+    border-top: 1px solid #b4b4b4;
+    padding: 20px;
+    border-radius: 5px;
+    
+  }
+
+.top-form{
+    display: flex;
+    justify-content: center;
+    
+    margin-bottom: 20px;
+}
+
+.nav{
+  background-color: darkgray;
+}

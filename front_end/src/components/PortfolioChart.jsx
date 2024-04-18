@@ -37,12 +37,11 @@ const StockChart = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      // const currentDate = new Date().toISOString();
-      
       const date = new Date();
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
       const day = String(date.getDate()).padStart(2, '0');
+      // format to YYYY-MM-DD
       const currentDate = `${year}-${month}-${day}T00:00:00Z`;
       const response = await axios.get(`https://data.alpaca.markets/v2/stocks/${symbol}/bars`, {
         params: {
@@ -75,12 +74,7 @@ const StockChart = () => {
     }
     setLoading(false);
   };
-  const getRandomColor = () => {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    return `rgb(${r}, ${g}, ${b})`;
-  };
+
   
 
  
@@ -119,18 +113,30 @@ const StockChart = () => {
     }
   }, [loading, data, symbol, companyName]);
 
+  const getRandomColor = () => {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return `rgb(${r}, ${g}, ${b})`;
+  };
+
   return (
           <div>
-            <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Search for a symbol:</label>
+            <form onSubmit={handleSubmit} className='top-form'>
+        <div className="mb-3 mt-4 form-group">
+          <label style={{fontSize: '25px'}} htmlFor="exampleInputEmail1">Search for a symbol:</label>
+          <div>
           <input type="text" className="form-control" value={inputValue} onChange={handleChange} id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="SYMBOL"/>
+          <button type="submit" className="btn btn-primary">Submit</button>
+          </div>
           <small id="emailHelp" className="form-text text-muted">Ensure symbol is in all caps</small>
+          
         </div>
-        <br></br>
+        
+        
        
       
-        <button type="submit" className="btn btn-primary">Submit</button>
+        
       </form>
       
       

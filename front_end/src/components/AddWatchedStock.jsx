@@ -4,22 +4,20 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { api } from '../utilities';
 
-function ChangeStockQuantity() {
+function AddWatchedStock() {
   const [symbol, setSymbol] = useState('');
-  const [quantity, setQuantity] = useState('');
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-        await api.put(`stock_positions/${symbol}/`, {
+        await api.post('watched_stocks/', {
+          symbol,
           
-          quantity: String(quantity)
-        }, {
-          headers: {
-            'Authorization': `Token ${localStorage.getItem('token')}`
-          }
-        });
+        }, 
+         
+        );
     } catch (error) {
       console.error('Error adding stock:', error);
     }
@@ -28,20 +26,17 @@ function ChangeStockQuantity() {
   return (
     <Form onSubmit={handleSubmit} className='form'>
       <Form.Group className="mb-3 mt-4" controlId="formBasicEmail">
-        <Form.Label style={{fontSize: '25px'}}>Change Quantity</Form.Label>
+        <Form.Label style={{fontSize: '25px'}}>Add a stock to watch:</Form.Label>
         <Form.Control type="text" placeholder="Enter symbol" value={symbol} onChange={e => setSymbol(e.target.value)} />
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicQuantity">
-        <Form.Label>Quantity</Form.Label>
-        <Form.Control type="number" placeholder="Enter quantity" value={quantity} onChange={e => setQuantity(e.target.value)} />
-      </Form.Group>
+    
 
-      <Button variant="light" type="submit">
+      <Button variant="primary" type="submit">
         Submit
       </Button>
     </Form>
   );
 }
 
-export default ChangeStockQuantity;
+export default AddWatchedStock;

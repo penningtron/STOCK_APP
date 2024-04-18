@@ -24,18 +24,22 @@ function WatchList() {
   
       fetchWatchList();
     }, []);
+
+
   
     return (
       <>
+      <h1> Your Watched Stocks:</h1>
         {watchList && (
-          <ListGroup as="ol" numbered>
+          <ListGroup as="ol" numbered className='top-form mb-5'>
             {watchList.map((item, index) => (
               <ListGroup.Item as="li" key={index}>
-                {item.symbol} - Quantity: {item.quantity}
+                {item.symbol}  {item.quantity}
               </ListGroup.Item>
             ))}
           </ListGroup>
         )}
+        
       </>
     );
   }

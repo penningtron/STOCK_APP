@@ -23,15 +23,15 @@ function RemoveStock() {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Stock to remove</Form.Label>
+    <Form onSubmit={handleSubmit} className='form'>
+      <Form.Group className="mb-3 mt-4" controlId="formBasicEmail">
+        <Form.Label style={{fontSize: '25px'}}>Stock to remove</Form.Label>
         <Form.Control type="text" placeholder="Enter symbol" value={symbol} onChange={e => setSymbol(e.target.value)} />
       </Form.Group>
 
       
 
-      <Button variant="primary" type="submit">
+      <Button variant="danger" type="submit">
         Remove
       </Button>
     </Form>

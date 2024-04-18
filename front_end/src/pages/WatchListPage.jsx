@@ -10,6 +10,8 @@ import RemoveStock from "../components/RemoveStock";
 import ChangeStockQuantity from "../components/ChangeQuantity";
 import { useOutletContext } from "react-router-dom";
 import WatchList from "../components/WatchList";
+import AddWatchedStock from "../components/AddWatchedStock";
+import RemoveWatchStock from "../components/RemoveWatchStock";
 
 
 
@@ -23,6 +25,8 @@ const WatchListPage = () => {
             
         
             <WatchList data={user} />
+            <AddWatchedStock />
+            <RemoveWatchStock />
             
           
           

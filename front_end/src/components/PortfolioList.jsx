@@ -40,8 +40,10 @@ function PortfolioList() {
 
   return (
     <>
+    <h1> Your Portfolio</h1>
       {stockPositions && (
-        <ListGroup as="ol" numbered>
+        <ListGroup as="ol" numbered className='top-form mb-5'>
+          
           {stockPositions.map((item, index) => (
             <ListGroup.Item as="li" key={index}>
               {item.symbol} - Quantity: {item.quantity}

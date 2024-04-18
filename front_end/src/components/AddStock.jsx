@@ -24,9 +24,9 @@ function AddStock() {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Add A Stock</Form.Label>
+    <Form onSubmit={handleSubmit} className='form'>
+      <Form.Group className="mb-3 mt-4" controlId="formBasicEmail">
+        <Form.Label style={{fontSize: '25px'}}>Add A Stock</Form.Label>
         <Form.Control type="text" placeholder="Enter symbol" value={symbol} onChange={e => setSymbol(e.target.value)} />
       </Form.Group>
 
@@ -35,7 +35,7 @@ function AddStock() {
         <Form.Control type="number" placeholder="Enter quantity" value={quantity} onChange={e => setQuantity(e.target.value)} />
       </Form.Group>
 
-      <Button variant="primary" type="submit">
+      <Button className="mb-4" variant="success" type="submit">
         Submit
       </Button>
     </Form>
