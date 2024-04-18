@@ -39,6 +39,8 @@ class All_watched_stocks(TokenReq):
 
     def post(self, request):
         data = request.data.copy()
+        user_watchlist = request.user.watchlist
+        data['watchlist'] = user_watchlist.id
         ser_list = WatchedStockSerializer(data = data)
         if ser_list.is_valid():
             ser_list.save()
@@ -47,4 +49,10 @@ class All_watched_stocks(TokenReq):
             print(ser_list.errors)
             return Response(ser_list.errors, status=HTTP_400_BAD_REQUEST)
     
-
+    def delete(self, request, symbol):
+        user_watchlist = request.user.watchlist
+        data = request.data
+        data['watchlist'] = user_watchlist.id
+        watchstock = get_object_or_404(WatchStock, watchlist=user_watchlist, symbol=symbol)
+        watchstock.delete()
+        return Response("Stock has been removed from watchlist", status=HTTP_204_NO_CONTENT)

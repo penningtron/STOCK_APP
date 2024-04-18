@@ -27,6 +27,7 @@ urlpatterns = [
     path('api/v1/stock_positions/', include("stock_positions_app.urls")),
     path('api/v1/portfolio/', include("portfolio_app.urls")),
     path('api/v1/watched_stocks/', All_watched_stocks.as_view(), name='watched_stocks'),
+    path('api/v1/watched_stocks/<str:symbol>/', All_watched_stocks.as_view(), name='watched_stocks'),
     
     
 ]
