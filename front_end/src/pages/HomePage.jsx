@@ -25,7 +25,7 @@ const HomePage = () => {
             <AddStock />
             <ChangeStockQuantity />
           
-          <RemoveStock />
+          
           
         </>
       )

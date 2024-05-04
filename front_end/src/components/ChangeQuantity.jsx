@@ -12,7 +12,7 @@ function ChangeStockQuantity() {
     event.preventDefault();
 
     try {
-        await api.put(`stock_positions/${symbol}/`, {
+        await axios.put(`stock_positions/${symbol}/`, {
           
           quantity: String(quantity)
         }, {
