@@ -1,7 +1,10 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL : "http://127.0.0.1:8000/api/v1/"
+    // base url for local dev
+    // baseURL : "http://127.0.0.1:8000/api/v1/"
+
+    baseURL: "http://ec2-3-88-1-97.compute-1.amazonaws.com:8000/api/",
 
 
 })
